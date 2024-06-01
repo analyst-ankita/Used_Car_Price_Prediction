@@ -1,10 +1,10 @@
-from flask import Flask, request, jsonify, render_template
-import pickle
+from flask import Flask, request, render_template
 import numpy as np
+import utils
+import config
 
 app = Flask(__name__)
-
-model = pickle.load(open('lr_model.pkl', 'rb'))
+model = utils.load_model()
 
 @app.route('/')
 def home():
@@ -31,4 +31,4 @@ def predict():
     return render_template('index.html', prediction_text=f'Estimated Present Price in lakhs: ₹{output}')
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(port=config.PORT_NUMBER, host= '0.0.0.0' , debug=True)
